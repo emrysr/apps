@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Solar PV</title>
+</head>
+
+<body>
+    <section id="mysolarpv">
+        <div class="col1">
+            <div class="col1-inner">
+                <main class="content-container container-fluid">
+                    <nav id="buttons" class="d-flex justify-content-between">
+                        <ul id="tabs" class="nav nav-pills mb-0">
+                            <li><button class="viewpower active btn btn-large btn-link btn-inverse myelectric-view-cost"
+                                    title="Power View">
+                                    <span class="d-xs-none">Pwr</span>
+                                    <span class="d-none d-xs-inline-block">Power</span>
+                                </button></li>
+                            <li><button class="viewhistory btn btn-large btn-link btn-inverse myelectric-view-kwh"
+                                    title="View History">
+                                    <span class="d-xs-none">Hist</span>
+                                    <span class="d-none d-xs-inline-block">History</span>
+                                </button></li>
+                            <li><button class="balanceline btn btn-large btn-link btn-inverse myelectric-view-kwh"
+                                    title="Show Balance">
+                                    <span class="d-xs-none">Bal</span>
+                                    <span class="d-none d-xs-inline-block">Balance</span>
+                                </button></li>
+                            <li><button id="show-all"
+                                    class="hide bargraph-viewall btn btn-large btn-link btn-inverse myelectric-view-kwh"
+                                    title="Show All">
+                                    <span class="d-xs-none">All</span>
+                                    <span class="d-none d-xs-inline-block">Show All</span>
+                                </button></li>
+                        </ul>
+                        <ul class="text-right nav nav-pills mb-0">
+                            <li><button class="btn btn-large btn-link btn-inverse openconfig" title="Edit"><svg
+                                        class="icon">
+                                        <use xlink:href="#icon-wrench"></use>
+                                    </svg></button></li>
+                            <li><button class="hide btn-large close-config btn btn-link btn-inverse" title="Close"><svg
+                                        class="icon">
+                                        <use xlink:href="#icon-close"></use>
+                                    </svg></button></li>
+                        </ul>
+                    </nav>
+
+
+                    <section id="app-block" class="block">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5 class="electric-title mb-0 text-md-larger text-light">USE NOW</h5>
+                                <h2
+                                    class="power-value display-sm-4 display-md-3 display-lg-2 mt-0 mb-lg-3 text-primary">
+                                    <span class="usenow">165</span><span class="power-unit">W</span></h2>
+                            </div>
+                            <div class="text-xs-center">
+                                <h5 class="electric-title mb-0 text-md-larger text-light px-1"><span
+                                        class="balance-label">IMPORTING</span></h5>
+                                <h2 class="power-value display-sm-4 display-md-3 display-lg-2 mt-0 mb-lg-3 text-danger">
+                                    <span class="balance">165</span><span class="power-unit">W</span></h2>
+                            </div>
+                            <div class="text-xs-right">
+                                <h5 class="electric-title mb-0 text-md-larger text-light">SOLAR PV</h5>
+                                <h2
+                                    class="power-value display-sm-4 display-md-3 display-lg-2 mt-0 mb-lg-3 text-warning ">
+                                    <span class="solarnow">0</span><span class="power-unit">W</span></h2>
+                            </div>
+                        </div>
+
+                        <div id="graph-nav"
+                            class="visnavblock mb-2 d-flex justify-content-start d-flex justify-content-stretch btn-group">
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="1">1h</button>
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="3">3h</button>
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="6">6h</button>
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="24">D</button>
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="168">W</button>
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="720">M</button>
+                            <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2"
+                                time="8760">Y</button>
+                            <button id="zoomin" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">+</button>
+                            <button id="zoomout" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">-</button>
+                            <button id="left" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">&lt;</button>
+                            <button id="right" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">&gt;</button>
+                        </div>
+
+                        <div id="placeholder_bound" class="chart-placeholder">
+                            <div id="placeholder" style="padding: 0px; position: relative;"><canvas class="flot-base"
+                                    style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 679px; height: 457px;"
+                                    width="1358" height="914"></canvas>
+                                <div class="flot-text"
+                                    style="position: absolute; inset: 0px; font-size: smaller; color: rgb(84, 84, 84);">
+                                    <div class="flot-x-axis flot-x1-axis xAxis x1Axis"
+                                        style="position: absolute; inset: 0px; display: block;">
+                                        <div style="position: absolute; max-width: 84px; top: 435px; left: 88px; text-align: center;"
+                                            class="flot-tick-label tickLabel">20:00</div>
+                                        <div style="position: absolute; max-width: 84px; top: 435px; left: 193px; text-align: center;"
+                                            class="flot-tick-label tickLabel">21:00</div>
+                                        <div style="position: absolute; max-width: 84px; top: 435px; left: 298px; text-align: center;"
+                                            class="flot-tick-label tickLabel">22:00</div>
+                                        <div style="position: absolute; max-width: 84px; top: 435px; left: 403px; text-align: center;"
+                                            class="flot-tick-label tickLabel">23:00</div>
+                                        <div style="position: absolute; max-width: 84px; top: 435px; left: 508px; text-align: center;"
+                                            class="flot-tick-label tickLabel">00:00</div>
+                                        <div style="position: absolute; max-width: 84px; top: 435px; left: 614px; text-align: center;"
+                                            class="flot-tick-label tickLabel">01:00</div>
+                                    </div>
+                                    <div class="flot-y-axis flot-y1-axis yAxis y1Axis"
+                                        style="position: absolute; inset: 0px; display: block;">
+                                        <div style="position: absolute; top: 420px; left: 22px; text-align: right;"
+                                            class="flot-tick-label tickLabel">0</div>
+                                        <div style="position: absolute; top: 378px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">100</div>
+                                        <div style="position: absolute; top: 336px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">200</div>
+                                        <div style="position: absolute; top: 294px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">300</div>
+                                        <div style="position: absolute; top: 252px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">400</div>
+                                        <div style="position: absolute; top: 210px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">500</div>
+                                        <div style="position: absolute; top: 168px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">600</div>
+                                        <div style="position: absolute; top: 126px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">700</div>
+                                        <div style="position: absolute; top: 84px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">800</div>
+                                        <div style="position: absolute; top: 42px; left: 9px; text-align: right;"
+                                            class="flot-tick-label tickLabel">900</div>
+                                        <div style="position: absolute; top: 0px; left: 2px; text-align: right;"
+                                            class="flot-tick-label tickLabel">1000</div>
+                                    </div>
+                                </div><canvas class="flot-overlay"
+                                    style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 679px; height: 457px;"
+                                    width="1358" height="914"></canvas>
+                            </div>
+                        </div>
+
+                        <div id="breakdown" class="d-flex justify-content-between py-lg-3 text-light">
+                            <div class="appbox mb-3 text-primary">
+                                <h5 class="appbox-title mb-1 text-light text-md-larger">USE</h5>
+                                <h2 class="appbox-value total_use_kwh my-0">1.8</h2>
+                                <h5 class="appbox-units my-0">
+                                    kWh
+                                </h5>
+                            </div>
+                            <div class="appbox mb-3 text-warning">
+                                <h5 class="appbox-title mb-1 text-light text-md-larger px-1">SOLAR</h5>
+                                <h2 class="appbox-value total_solar_kwh my-0">0.00</h2>
+                                <h5 class="appbox-units my-0">
+                                    kWh
+                                </h5>
+                            </div>
+                            <div class="appbox mb-3 text-success">
+                                <h5 class="appbox-title mb-1 text-light text-md-larger">DIRECT</h5>
+                                <h2 class="appbox-value total_use_direct_prc my-0">-- %</h2>
+                                <h5 class="appbox-units my-0">
+                                    <span id="total_use_direct_kwh">0.0</span>
+                                    <span>kWh</span>
+                                </h5>
+                            </div>
+                            <div class="appbox mb-3 text-tertiary">
+                                <h5 class="appbox-title mb-1 text-light text-md-larger px-1">EXPORT</h5>
+                                <h2 class="appbox-value total_export_prc my-0">-- %</h2>
+                                <h5 class="appbox-units my-0">
+                                    <span id="total_export_kwh">0.0</span>
+                                    <span>kWh</span>
+                                </h5>
+                            </div>
+                            <div class="appbox mb-3 text-danger">
+                                <h5 class="appbox-title mb-1 text-light text-md-larger">GRID</h5>
+                                <h2 class="appbox-value total_import_prc my-0">100%</h2>
+                                <h5 class="appbox-units my-0">
+                                    <span id="total_import_kwh">1.8</span>
+                                    <span>kWh</span>
+                                </h5>
+                            </div>
+                        </div>
+                    </section>
+
+
+
+                    <section id="app-setup" class="hide pb-3">
+                        <!-- instructions and settings -->
+                        <div class="px-3">
+                            <div class="row-fluid">
+                                <div class="span9 xappconfig-description">
+                                    <div class="xappconfig-description-inner text-light">
+                                        <h2 class="appconfig-title text-warning">My Solar</h2>
+                                        <p class="lead">The My Solar app can be used to explore onsite solar generation,
+                                            self consumption, export and building consumption both in realtime with a
+                                            moving power graph view and historically with a daily and monthly bargraph.
+                                        </p>
+                                        <p><strong class="text-white">Auto configure:</strong> This app can
+                                            auto-configure connecting to emoncms feeds with the names shown on the
+                                            right, alternatively feeds can be selected by clicking on the edit button.
+                                        </p>
+                                        <p><strong class="text-white">Cumulative kWh</strong> feeds can be generated
+                                            from power feeds with the power_to_kwh input processor.</p>
+                                        <img src="../Modules/app/images/mysolar_app.png"
+                                            class="d-none d-sm-inline-block">
+                                    </div>
+                                </div>
+                                <div class="span3 app-config pt-3"></div>
+                            </div>
+                        </div>
+                    </section>
+
+                </main>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

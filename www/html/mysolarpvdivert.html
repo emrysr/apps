@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Solar PV divert</title>
+</head>
+
+<body>
+    <section id="mysolarpvdivert">
+        <nav id="buttons" class="d-flex justify-content-between">
+            <ul id="tabs" class="nav nav-pills mb-0">
+                <li><button class="viewhistory btn btn-large btn-link btn-inverse" title="View History"
+                        style="opacity: 1;">
+                        <span class="d-xs-none">Hist</span>
+                        <span class="d-none d-xs-inline">History</span>
+                    </button></li>
+                <li><button class="balanceline btn btn-large btn-link btn-inverse" title="Show Balance"
+                        style="opacity: 1;">
+                        <span class="d-xs-none">Bal</span>
+                        <span class="d-none d-xs-inline">Balance</span>
+                    </button></li>
+            </ul>
+            <ul class="text-right nav nav-pills mb-0">
+                <li><button class="btn btn-large btn-link btn-inverse openconfig" title="Edit"><svg class="icon">
+                            <use xlink:href="#icon-wrench"></use>
+                        </svg></button></li>
+                <li><button class="btn-large close-config btn btn-link btn-inverse hide" title="Close"><svg
+                            class="icon">
+                            <use xlink:href="#icon-close"></use>
+                        </svg></button></li>
+            </ul>
+        </nav>
+
+        <section id="app-block" class="block">
+            <div class="d-flex justify-content-between">
+                <div class="text-xs-center">
+                    <h5 class="electric-title mb-0 text-md-larger text-light">HOUSE</h5>
+                    <h2 class="power-value display-md-3 display-lg-2 mt-0 mb-lg-3 text-info"><span
+                            class="housenow">0</span><span class="power-unit"></span></h2>
+                </div>
+                <div class="text-xs-center">
+                    <h5 class="electric-title mb-0 text-md-larger text-light px-1">DIVERT</h5>
+                    <h2 class="power-value display-md-3 display-lg-2 mt-0 mb-lg-3 text-quaternary"><span
+                            class="divertnow">-</span><span class="power-unit"></span></h2>
+                </div>
+                <div class="text-xs-center">
+                    <h5 class="electric-title mb-0 text-md-larger text-light">TOTAL USE</h5>
+                    <h2 class="power-value display-md-3 display-lg-2 my-0 text-primary"><span
+                            class="usenow"></span><span class="power-unit"></span></h2>
+                </div>
+                <div class="text-xs-center">
+                    <h5 class="electric-title mb-0 text-md-larger text-light"><span class="balance-label">-</span></h5>
+                    <h2 class="power-value display-md-3 display-lg-2 my-0 text-success ">
+                        <span class="balance"></span>
+                    </h2>
+                </div>
+                <div class="text-xs-center">
+                    <h5 class="electric-title mb-0 text-md-larger text-light">SOLAR</h5>
+                    <h2 class="power-value display-md-3 display-lg-2 my-0 text-warning "><span
+                            class="generationnow"></span><span class="power-unit"></span></h2>
+                </div>
+            </div>
+
+            <div id="graph-nav"
+                class="visnavblock mb-2 d-flex justify-content-start d-flex justify-content-stretch btn-group">
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="1">1h</button>
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="3">3h</button>
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="6">6h</button>
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="24">D</button>
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="168">W</button>
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="720">M</button>
+                <button class="visnav time btn btn-inverse btn-link btn-large py-1 px-2" time="8760">Y</button>
+                <button id="zoomin" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">+</button>
+                <button id="zoomout" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">-</button>
+                <button id="left" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">&lt;</button>
+                <button id="right" class="visnav btn btn-inverse btn-link btn-large py-1 px-2">&gt;</button>
+            </div>
+            <div id="placeholder_bound" style="width: 100%; height: 180px;">
+                <div id="placeholder" style="height: 180px; width: 100px;"></div>
+            </div>
+
+            <table class="statstable">
+                <tbody>
+                    <tr>
+                        <td class="statsbox" colspan="2" style="background: #dccc1f">
+                            <div class="statsbox-inner-unit">
+                                <div id="statsbox-generation" class="statsbox-padded" style="position: relative;">
+                                    <div class="statsbox-title"><span class="generationtitle">SOLAR</span></div>
+                                    <div><span class="statsbox-value total_generated_kwh">0</span> <span
+                                            class="statsbox-units">kWh</span></div>
+                                    <div style="position: absolute; width: 50%; left: 0%; bottom: 0%">
+                                        <span class="statsbox-prc divert_total_generated_prc">0</span>
+                                    </div>
+                                    <div style="position: absolute; width: 50%; left: 50%; bottom: 0%">
+                                        <span class="statsbox-prc house_generated_total_generated_prc">0</span>
+                                    </div>
+                                    <div style="position: absolute; height: 100%; right: 0%; top: 0%">
+                                        <div style="display: table; height: 100%; border-spacing: 0px;">
+                                            <div style="display: table-cell; vertical-align: middle;">
+                                                <span class="statsbox-prc total_export_prc">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td class="statsbox">
+                            <div class="statsbox-inner-arrow">
+                                <div class="statsbox-padded statsbox-arrow-right"><span
+                                        class="statsbox-value total_export_kwh">0</span> <span
+                                        class="statsbox-units">kWh</span></div>
+                            </div>
+                        </td>
+
+                        <td class="statsbox" style="background: #d52e2e">
+                            <div class="statsbox-padded statsbox-inner-unit">
+                                <div class="statsbox-title">GRID</div>
+                                <div><span class="statsbox-value total_grid_balance_kwh">0</span> <span
+                                        class="statsbox-units">kWh</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="statsbox">
+                            <div class="statsbox-inner-arrow">
+                                <div class="statsbox-padded statsbox-arrow-down"><span
+                                        class="statsbox-value total_divert_kwh">0</span> <span
+                                        class="statsbox-units">kWh</span></div>
+                            </div>
+                        </td>
+
+                        <td class="statsbox">
+                            <div class="statsbox-inner-arrow">
+                                <div class="statsbox-padded statsbox-arrow-down"><span
+                                        class="statsbox-value total_house_generated_kwh">0</span> <span
+                                        class="statsbox-units">kWh</span></div>
+                            </div>
+                        </td>
+
+                        <td class="statsbox">
+                        </td>
+
+                        <td class="statsbox">
+                            <div class="statsbox-inner-arrow">
+                                <div class="statsbox-padded statsbox-arrow-down"><span
+                                        class="statsbox-value total_import_kwh">0</span> <span
+                                        class="statsbox-units">kWh</span></div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="statsbox" style="background: #fb7b50">
+                            <div class="statsbox-padded statsbox-inner-unit">
+                                <div class="statsbox-title">DIVERT</div>
+                                <div><span class="statsbox-value total_divert_kwh">0</span> <span
+                                        class="statsbox-units">kWh</span></div>
+                            </div>
+                        </td>
+
+                        <td class="statsbox" colspan="3" style="background: #82cbfc">
+                            <div class="statsbox-inner-unit">
+                                <div class="statsbox-padded" style="position: relative;">
+                                    <div class="statsbox-title">HOUSE</div>
+                                    <div><span class="statsbox-value total_house_kwh">0</span> <span
+                                            class="statsbox-units">kWh</span></div>
+                                    <div style="position: absolute; width: 33.33333%; left: 0%; top: 0%">
+                                        <div><span class="statsbox-prc house_generated_house_use_prc">0</span></div>
+                                    </div>
+                                    <div style="position: absolute; width: 33.33333%; left: 66.66667%; top: 0%">
+                                        <div><span class="statsbox-prc total_import_prc">0</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="app-setup" class="pb-3 hide">
+            <!-- instructions and settings -->
+            <div class="px-3">
+                <div class="row-fluid">
+                    <div class="span9 xappconfig-description">
+                        <div class="xappconfig-description-inner text-light">
+                            <h2 class="appconfig-title text-warning">My Solar Divert</h2>
+                            <p class="lead">
+                                The My Solar with Divert app can be used to explore onsite solar (and optionally wind)
+                                generation, self consumption, export and building consumption.</p>
+                            <p>It is designed for users who divert some or all of their excess generated power to
+                                something. For example an immersion heater or electric car. It shows all of this both in
+                                realtime with a moving power graph view and historically with a daily and monthly
+                                bargraph.
+                            </p>
+                            <p><strong class="text-white">Auto configure:</strong> This app can auto-configure
+                                connecting to emoncms feeds with the names shown on the right, alternatively feeds can
+                                be selected by clicking on the edit button.</p>
+                            <p><strong class="text-white">Cumulative kWh</strong> feeds can be generated from power
+                                feeds with the power_to_kwh input processor.</p>
+                            <img src="../Modules/app/images/mysolar_app.png" class="d-none d-sm-inline-block">
+                        </div>
+                    </div>
+                    <div class="span3 app-config pt-3">
+                        <div class="appconfig-box" key="use"><i class="status icon-white icon-remove-circle"></i> <b
+                                class="feedname" key="use">use <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Total use in
+                                watts (including diversion)</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select use feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="solar"><i class="status icon-white icon-remove-circle"></i> <b
+                                class="feedname" key="solar">solar <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Solar pv
+                                generation in watts</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select solar feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="wind"><i class="status icon-white icon-remove-circle"></i> <b
+                                class="feedname" key="wind">wind <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Wind generation
+                                in watts</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select wind feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="divert"><i class="status icon-white icon-remove-circle"></i> <b
+                                class="feedname" key="divert">divert <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Immersion usage
+                                in watts</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select divert feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="use_kwh"><i class="status icon-white icon-remove-circle"></i> <b
+                                class="feedname" key="use_kwh">use_kwh <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Cumulative
+                                total use in kWh (including diversion)</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select use_kwh feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="solar_kwh"><i class="status icon-white icon-remove-circle"></i>
+                            <b class="feedname" key="solar_kwh">solar_kwh <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Cumulative
+                                solar generation in kWh</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select solar_kwh feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="wind_kwh"><i class="status icon-white icon-remove-circle"></i>
+                            <b class="feedname" key="wind_kwh">wind_kwh <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Cumulative wind
+                                generation in kWh</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select wind_kwh feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="divert_kwh"><i class="status icon-white icon-remove-circle"></i>
+                            <b class="feedname" key="divert_kwh">divert_kwh <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Cumulative
+                                divert energy in kWh</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select divert_kwh feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="import_kwh"><i class="status icon-white icon-remove-circle"></i>
+                            <b class="feedname" key="import_kwh">import_kwh <span
+                                    style="color:#ccc; font-size:12px">[AUTO]</span></b><i
+                                class="appconfig-edit icon-pencil icon-white"
+                                style="float:right; cursor:pointer"></i><br><span class="appconfig-info">Cumulative grid
+                                import in kWh</span>
+                            <div class="feed-select-div input-append" style="display: none;"><select
+                                    class="feed-select">
+                                    <option value="0">Select import_kwh feed:</option>
+                                    <option value="auto">AUTO SELECT</option>
+                                    <optgroup label="Meirion House">
+                                        <option value="1">power</option>
+                                        <option value="2">KWh</option>
+                                        <option value="4">vrms</option>
+                                    </optgroup>
+                                    <optgroup label="openevse-8970">
+                                        <option value="48">ev_current</option>
+                                        <option value="49">ev_power</option>
+                                        <option value="50">ev_energy</option>
+                                        <option value="51">ev_temperature</option>
+                                        <option value="52">ev_state</option>
+                                        <option value="53">ev_pilot</option>
+                                        <option value="54">ev_divertmode_state</option>
+                                    </optgroup>
+                                </select><button class="btn feed-select-ok">ok</button></div>
+                        </div>
+                        <div class="appconfig-box" key="kw"><i class="status icon-ok-sign icon-white"></i> <b>Show
+                                kW</b><br><span class="appconfig-info">Display power as kW</span> <input
+                                class="appconfig-value" type="checkbox" key="kw"></div><br>
+                        <div style="text-align:center;"><button class="btn launchapp"
+                                style="padding:10px; display:none">Launch App</button><button
+                                class="btn btn-danger deleteapp" style="padding:10px; margin-left:20px"><i
+                                    class="icon-trash icon-white"></i> Delete</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </section>
+</body>
+
+</html>

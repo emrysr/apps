@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings Menu</title>
+</head>
+
+<body>
+    <div id="settings">
+        <main class="p-2">
+            <header>
+                <h3 class="text-primary m-0 d-flex" style="align-items: center;">
+                    <svg class="icon apps">
+                        <use xlink:href="#icon-apps"></use>
+                    </svg>
+                    <span class="pl-1">EmonCMS Apps</span>
+                </h3>
+                <div data-state="0">
+                    <p class="lead text-white">Connect to your apps</p>
+                    <p class="text-light">Once connected to your EmonCMS server,
+                        you can use your apps on your device.</p>
+                </div>
+            </header>
+            <details id="app_login_forms">
+                <summary class="btn-large btn btn-primary btn-flat btn-block">Connect</summary>
+                <form id="app_authorize" class="auth form-inline text-white px-3 d-none">
+                    <div class="form-group py-2">
+                        <label>Hostname (or IP):
+                            <input placeholder="eg: emoncms.org or emonpi.home" class="form-control" type="text"
+                                name="host" required autocapitalize="none">
+                        </label>
+                        <p class="help muted mb-0"><a href="https://play.google.com/store/search?q=openenergymonitor"
+                                target="_blank"
+                                title="Download our 'Emon Devices' app to to scan your network...">Forgotton
+                                hostname?</a></p>
+                    </div>
+                    <div class="form-group py-2">
+                        <label>API Key:
+                            <input placeholder="eg: 38227cc1dcad8c427e0a2abad2278c73" class="form-control" type="text"
+                                name="apikey" required autocapitalize="none">
+                        </label>
+                        <p class="help muted mb-0"><a href="https://emoncms.org/user/view" target="_blank"
+                                title="You can read your API key from your EmonCMS account page.">Forgotton
+                                API Key?</a></p>
+                    </div>
+                    <div class="form-group py-2 d-flex justify-content-between">
+                        <button type="button" class="toggleAuthMethod btn btn-inverse btn-small">
+                            or use password</button>
+                        <button class="btn btn-primary">Connect</button>
+                    </div>
+                </form>
+
+
+
+
+
+
+
+
+                <form id="app_authenticate" class="auth form-inline text-white px-3">
+                    <div class="form-group py-2">
+                        <label>Host name / IP Address:
+                            <input placeholder="eg: https://emoncms.org or emonpi.home" class="form-control" type="text"
+                                name="host" required autocapitalize="none">
+                        </label>
+                        <p class="help muted mb-0"><a href="https://play.google.com/store/search?q=openenergymonitor"
+                                target="_blank"
+                                title="Download our 'Emon Devices' app to to scan your network...">Forgotton
+                                hostname?</a></p>
+                    </div>
+                    <div class="form-group py-2">
+                        <label>Username (or email):
+                            <input placeholder="eg: kam123" class="form-control" type="text" name="username" required
+                                autocapitalize="none">
+                        </label>
+                    </div>
+                    <div class="form-group py-2">
+                        <label>Password:
+                            <input class="form-control" type="password" name="password" required>
+                        </label>
+                        <p class="help muted mb-0"><a href="https://emoncms.org"
+                                title="You can reset forgotton EmonCMS passwords on the our login page..."
+                                target="_blank">Forgotton password?</a>
+                        </p>
+                    </div>
+                    <div class="form-group py-2 d-flex justify-content-between">
+                        <button type="button" class="toggleAuthMethod btn btn-inverse btn-small">
+                            or use api key</button>
+                        <button class="btn btn-primary">Connect</button>
+                    </div>
+                </form>
+            </details>
+            <p id="connection_status" class="mb-2"> status: ...</p>
+
+            <nav class="mt-5">
+                <a href="#" id="app_disconnect" class="d-none">Disconnect</a>
+                <a href="#" id="app_clear_cache" title="Clear Page Cache">Clear Cache</a>
+                <a href="https://community.openenergymonitor.org/">Help</a>
+                <a href="https://openenergymonitor.org/">OpenEnergyMonitor</a>
+            </nav>
+        </main>
+        <!-- <button class="btn-large close-tab btn btn-link btn-inverse" title="Close">
+            <svg class="icon">
+                <use xlink:href="#icon-close"></use>
+            </svg>
+        </button> -->
+    </div>
+</body>
+
+</html>

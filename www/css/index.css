@@ -1,0 +1,473 @@
+* {
+  -webkit-tap-highlight-color: rgba(
+    0,
+    0,
+    0,
+    0
+  ); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+body {
+  -webkit-touch-callout: none; /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none; /* prevent webkit from resizing text to fit */
+  -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
+  background-color: WhiteSmoke;
+  font-family: Montserrat, Veranda, system-ui, -apple-system, -apple-system-font,
+    'Segoe UI', 'Roboto', sans-serif;
+  font-size: 12px;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  /* Padding to avoid the "unsafe" areas behind notches in the screen */
+  padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px)
+    env(safe-area-inset-bottom, 0px) env(safe-area-inset-right, 0px);
+  width: 100%;
+}
+
+#top-nav {
+  background-color: #44b3e2;
+  display: flex;
+  flex-wrap: nowrap;
+  /* justify-content: space-between; */
+  align-items: stretch;
+  align-content: stretch;
+  overflow-y: hidden;
+  margin-bottom: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  padding-left: 2rem;
+}
+#top-nav > ::-webkit-scrollbar {
+  display: none;
+}
+#top-nav > a {
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: rgba(240, 239, 239, 0.741);
+  padding: 1em 0.8em;
+  text-align: center;
+  text-transform: uppercase;
+  flex-grow: 1;
+  transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.4s cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s,
+    opacity 1s ease-out;
+  border: 0px solid transparent;
+  border-top-width: 0.35em;
+  flex: 0 0 auto;
+}
+#top-nav > a:hover {
+  text-decoration: underline;
+  color: white;
+}
+#top-nav > a:active {
+  padding: 1.2em 0.8em 0.8em 0.8em;
+}
+#top-nav > a.active {
+  background: #209ed3;
+  color: white;
+  padding: 1.15em 0.8em 0.8em 0.8em;
+  text-decoration: none;
+  box-shadow: 0 0 0px 1px rgba(183, 220, 236, 0.15);
+  border-top-color: greenyellow;
+  pointer-events: none;
+}
+#top-nav > .fixed:hover {
+  text-decoration: none;
+  pointer-events: all;
+}
+#top-nav > .fixed {
+  position: fixed;
+  background-color: #44b3e2;
+  left: 0;
+  font-weight: bold;
+  width: 1rem;
+  box-shadow: 0px -1px 0px 1px #ffffff14 !important;
+}
+
+.fade {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 1s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.fade.in {
+  opacity: 1;
+  max-height: 100vh;
+  transition: max-height 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+/* Portrait layout (default) */
+.app {
+  text-align: center;
+  color: #fff;
+}
+
+#value {
+  color: #fff;
+  font-size: 32px;
+}
+
+/* Landscape layout (with min-width) */
+@media screen and (min-aspect-ratio: 1/1) and (min-width: 400px) {
+}
+
+#app-block {
+  padding: 10px;
+}
+
+.block-bound {
+  color: #fff;
+  background-color: #ccc;
+}
+
+.block-title {
+  font-weight: bold;
+  padding: 10px;
+}
+
+/* --------------------------------------------------------*/
+
+.bluenav {
+  float: right;
+  display: block;
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+  font-size: 12px;
+  padding: 11px;
+  cursor: pointer;
+  min-width: 30px;
+  text-align: center;
+}
+
+.bluenav:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* --------------------------------------------------------*/
+
+.col1 {
+  width: 100%;
+}
+.col1-inner {
+  padding: 10px;
+}
+
+.col2 {
+  width: 50%;
+  float: left;
+}
+.col2-inner {
+  padding: 10px;
+}
+
+/* --------------------------------------------------------*/
+
+.ajax-loader {
+  width: 32px;
+  height: 32px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -16px; /* negative half the size of height */
+  margin-left: -16px; /* negative half the size of width */
+}
+
+/* --------------------------------------------------------*/
+
+.container-fluid {
+  padding: 0;
+}
+
+#footer {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#top-navbar-fixed-top {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+@media (max-width: 767px) {
+  body {
+    padding: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .row {
+    padding: 10px;
+  }
+  .bluenav {
+    font-size: 12px;
+    padding: 8px;
+    min-width: 15px;
+  }
+  .block-title {
+    font-size: 12px;
+    padding: 8px;
+  }
+  .dmy {
+    display: none;
+  }
+
+  #app-block {
+    padding: 0px;
+  }
+  .col2 {
+    width: 100%;
+  }
+  .col1-inner {
+    padding: 5px;
+  }
+  .col2-inner {
+    padding: 5px;
+  }
+
+  #my-solar-pv-divert #buttons,
+  #my-solar-pv #buttons {
+    margin: 0;
+    padding: 0;
+  }
+  #my-solar-pv .col1-inner {
+    padding: 0px;
+  }
+}
+
+@media (min-width: 450px) and (max-width: 960px) {
+  .col2 {
+    width: 100%;
+  }
+}
+@media (min-width: 960px) {
+}
+
+.electric-title {
+  font-weight: bold;
+  font-size: 22px;
+  color: #44b3e2;
+}
+
+.power-value {
+  font-weight: bold;
+  font-size: 52px;
+  color: #44b3e2;
+  line-height: 1.1;
+}
+
+.units {
+  font-size: 75%;
+}
+
+.block-bound {
+  background-color: rgb(68, 179, 226);
+}
+
+/* MOVED FROM "MY HEAT PUMP" INLINE STYLE
+----------------------------------------- 
+*/
+
+.title1 {
+  font-weight: bold;
+}
+
+.value1 {
+  font-weight: bold;
+  font-size: 32px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.units1 {
+  font-weight: normal;
+  padding-left: 4px;
+  display: inline-block;
+  font-size: 18px;
+}
+.col1-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 450px) {
+  .title1 {
+    font-size: 12px;
+  }
+  .value1 {
+    font-size: 18px;
+  }
+}
+
+/* MOVED FROM "MY SOLAR PV DIVERT" INLINE STYLE
+----------------------------------------- 
+*/
+.statstable {
+  width: 100%;
+  border-spacing: 10px;
+  border-collapse: separate;
+}
+
+.statsbox {
+  width: 25%;
+  text-align: center;
+  vertical-align: middle;
+  background: #262626;
+}
+
+.statsbox-inner-unit {
+  color: #333;
+}
+
+.statsbox-padded {
+  padding: 10px;
+}
+
+.statsbox-inner-arrow {
+  color: #999;
+}
+
+.statsbox-title {
+  font-weight: bold;
+  font-size: 20px;
+  padding-bottom: 15px;
+}
+
+.statsbox-value {
+  font-weight: bold;
+  font-size: 36px;
+}
+
+.statsbox-units {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.statsbox-prc {
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.statsbox-arrow-down {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.statsbox-arrow-down:after {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: ' ';
+  width: 0;
+  height: 0;
+  position: absolute;
+  pointer-events: none;
+  border-top-color: #999;
+  border-width: 16px;
+  margin-left: -16px;
+}
+
+.statsbox-arrow-right {
+  position: relative;
+  margin-right: 16px;
+}
+
+.statsbox-arrow-right:after {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: ' ';
+  width: 0;
+  height: 0;
+  position: absolute;
+  pointer-events: none;
+  border-left-color: #999;
+  border-width: 16px;
+  margin-top: -16px;
+}
+
+.tooltip-title {
+  color: #aaa;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.tooltip-value {
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.tooltip-units {
+  color: #fff;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+  #statsbox-generation {
+    padding-bottom: 18px;
+  }
+  .statsbox-padded {
+    padding: 4px;
+  }
+  .statsbox-title {
+    font-size: 14px;
+    padding-bottom: 5px;
+  } /* 20px */
+  .statsbox-value {
+    font-size: 28px;
+  } /* 36px */
+  .statsbox-units {
+    font-size: 14px;
+  } /* 16px */
+  .statsbox-prc {
+    font-size: 14px;
+  } /* 16px */
+  .statsbox-arrow-down:after {
+    border-width: 10px;
+    margin-left: -10px;
+  }
+  .statsbox-arrow-right:after {
+    border-width: 10px;
+    margin-top: -10px;
+  }
+}
+
+/** MAIN MENU STYLES **/
+#settings {
+  display: flex;
+  align-items: flex-start;
+}
+#settings main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+#settings nav {
+  display: flex;
+  flex-direction: column;
+}
+#settings nav a {
+  font-size: 150%;
+  line-height: 1.4em;
+  padding: 0.5em 1em;
+}
+/** STYLE OVERRIDES **/
+.btn-flat {
+  background-image: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+input[type='password'] {
+  background-color: #333;
+  color: #fff;
+  margin: 0px;
+  margin-top: 5px;
+  width: 90%;
+}
